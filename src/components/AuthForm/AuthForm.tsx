@@ -6,6 +6,7 @@ import {
   FormControl,
   Input,
   Button,
+  Box,
 } from '@chakra-ui/react'
 import { IAuthData } from './authForm.interface'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -13,8 +14,12 @@ import * as yup from 'yup'
 import { PASSWORD_REGEXP } from '@/utils/constants/regexp'
 import { EERROR_MESSAGES } from '@/utils/constants/error-messages'
 import cls from './AuthForm.module.css'
-import { AuthService } from '../services/auth.service'
-import { create } from '../services/actions'
+import { AuthService } from '../../services/auth.service'
+import { createTokenCookie } from '../../services/actions'
+import { useState } from 'react'
+import { Text } from '@chakra-ui/react'
+import { useTokenStore } from '@/store/token'
+import { useRouter } from 'next/navigation'
 
 const schema = yup
   .object({
@@ -39,24 +44,29 @@ export const AuthForm = () => {
     resolver: yupResolver(schema),
   })
 
+  const [apiError, setApiError] = useState('')
+
+  const setToken = useTokenStore((state) => state.setAuth)
+
+  const router = useRouter()
+
   const onSubmit: SubmitHandler<IAuthData> = async (data) => {
-    console.log(data)
-    const isAuth = await create(data)
-    console.log(isAuth)
+    const response = await AuthService.logIn(data)
+
+    if (response.success) {
+      createTokenCookie(response.token as string)
+      setToken(true)
+      // router.push('/products')
+    } else {
+      setApiError(response.message as string)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cls.form}>
       <FormControl isInvalid={'username' in errors}>
         <FormLabel htmlFor='username'>Username</FormLabel>
-        <Input
-          id='username'
-          placeholder='username'
-          {...register('username', {
-            required: 'This is required',
-            minLength: { value: 4, message: 'Minimum length should be 4' },
-          })}
-        />
+        <Input id='username' placeholder='username' {...register('username')} />
         <FormErrorMessage>
           {errors.username && errors.username.message}
         </FormErrorMessage>
@@ -64,14 +74,7 @@ export const AuthForm = () => {
 
       <FormControl isInvalid={'password' in errors}>
         <FormLabel htmlFor='password'>Password</FormLabel>
-        <Input
-          id='password'
-          placeholder='password'
-          {...register('password', {
-            required: 'This is required',
-            minLength: { value: 3, message: 'Minimum length should be 4' },
-          })}
-        />
+        <Input id='password' placeholder='password' {...register('password')} />
         <FormErrorMessage>
           {errors.password && errors.password.message}
         </FormErrorMessage>
@@ -85,6 +88,14 @@ export const AuthForm = () => {
       >
         Log In
       </Button>
+
+      {apiError && (
+        <Box display='flex' alignItems='center' justifyContent='space-between'>
+          <Text fontSize='lg' color='red'>
+            {apiError}
+          </Text>
+        </Box>
+      )}
     </form>
   )
 }
