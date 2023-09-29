@@ -1,14 +1,23 @@
 import React, { FC } from 'react'
 import { IProductListProps } from './productList.interface'
+import { ProductCard } from '../ProductCard/ProductCard'
+import cls from './Product.module.css'
 
 export const ProductList: FC<IProductListProps> = ({ products }) => {
   return (
-    <div>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>{product.title}</li>
-        ))}
-      </ul>
-    </div>
+    <ul className={cls.list}>
+      {products.map((product) => (
+        <li key={product.id} className={cls.item}>
+          <ProductCard
+            id={product.id}
+            title={product.title}
+            image={product.image}
+            price={product.price}
+            category={product.category}
+            description={product.description}
+          />
+        </li>
+      ))}
+    </ul>
   )
 }
