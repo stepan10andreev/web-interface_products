@@ -1,3 +1,5 @@
 import { IProduct } from '@/services/products.service'
 
-export interface IProductCardProps extends IProduct {}
+export interface IProductCardProps extends IProduct {
+  detailed?: boolean
+}

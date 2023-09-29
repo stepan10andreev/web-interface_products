@@ -3,8 +3,10 @@
   flex-wrap: wrap;
   gap: 20px;
   align-items: stretch;
+  justify-content: space-between;
 }
 
 .item {
-  max-width: 300px;
+  max-width: 220px;
+  width: 100%;
 }
