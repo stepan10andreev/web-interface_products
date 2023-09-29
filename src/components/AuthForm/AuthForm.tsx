@@ -56,7 +56,7 @@ export const AuthForm = () => {
     if (response.success) {
       createTokenCookie(response.token as string)
       setToken(true)
-      // router.push('/products')
+      router.push('/products')
     } else {
       setApiError(response.message as string)
     }
