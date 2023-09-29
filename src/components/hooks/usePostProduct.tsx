@@ -1,13 +1,12 @@
 'use client'
 import { IProduct, ProductsService } from '@/services/products.service'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function usePostProduct(product: IProduct) {
-  const { isLoading, isSuccess, data } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => ProductsService.addProduct(product),
-    select: (data) => data.data,
+  const { mutateAsync } = useMutation({
+    mutationKey: ['addProduct'],
+    mutationFn: () => ProductsService.addProduct(product),
   })
 
-  return { data, isLoading, isSuccess }
+  return { mutateAsync }
 }

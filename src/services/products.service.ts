@@ -21,7 +21,7 @@ export const ProductsService = {
   },
 
   async addProduct(product: IProduct) {
-    return axios.post(`${API_BASE_URL}/products`, product)
+    return axios.post<IProduct>(`${API_BASE_URL}/products`, product)
   },
 
   async updateProduct(id: string, product: IProduct) {

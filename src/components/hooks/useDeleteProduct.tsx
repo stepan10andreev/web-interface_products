@@ -1,13 +1,10 @@
 'use client'
 import { IProduct, ProductsService } from '@/services/products.service'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-export function useDeleteProduct(id: string) {
-  const { isLoading, isSuccess, data } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => ProductsService.deleteProduct(id),
-    select: (data) => data.data,
+export function useDeleteProduct() {
+  return useMutation({
+    mutationKey: ['deleteProduct'],
+    mutationFn: async (id: string) => await ProductsService.deleteProduct(id),
   })
-
-  return { deletedProduct: data, isLoading, isSuccess }
 }
