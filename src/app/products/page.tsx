@@ -2,7 +2,7 @@
 import { ProductList } from '@/components/ProductList/ProductList'
 import { useProducts } from '@/components/hooks/useProducts'
 import { IProduct } from '@/services/products.service'
-import { Box } from '@chakra-ui/react'
+import { Box, CircularProgress } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Products() {
@@ -27,14 +27,15 @@ export default function Products() {
     <Box
       p={5}
       maxW='1000px'
+      height='100vh'
       mx='auto'
       display='flex'
       alignItems='center'
-      justifyContent='space-between'
+      justifyContent='center'
       flexWrap='wrap'
     >
       {isLoading ? (
-        <div>...loading</div>
+        <CircularProgress isIndeterminate color='blue.700' size='100px' />
       ) : products.length ? (
         <ProductList products={products} />
       ) : (
