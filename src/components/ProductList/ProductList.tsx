@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import { IProductListProps } from './productList.interface'
 import { ProductCard } from '../ProductCard/ProductCard'
 import cls from './Product.module.css'
+import { ButtonGroup, Button, IconButton } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 
 export const ProductList: FC<IProductListProps> = ({ products }) => {
   return (
