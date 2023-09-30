@@ -5,10 +5,10 @@ import { API_BASE_URL } from '@/utils/constants/general-constants'
 export interface IProduct {
   id?: number
   title: string
-  price: string
+  price: number
   category: string
   description: string
-  image: string
+  image?: string
 }
 
 export const ProductsService = {
@@ -21,6 +21,7 @@ export const ProductsService = {
   },
 
   async addProduct(product: IProduct) {
+    console.log(await axios.post<IProduct>(`${API_BASE_URL}/products`, product))
     return axios.post<IProduct>(`${API_BASE_URL}/products`, product)
   },
 

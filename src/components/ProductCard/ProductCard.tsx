@@ -48,6 +48,7 @@ export const ProductCard: FC<IProductCardProps> = ({
         'products',
         products.filter((product) => product.id !== id)
       )
+
       router.push(`/products`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

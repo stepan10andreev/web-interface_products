@@ -1,4 +1,5 @@
 'use client'
+import { AddButton } from '@/components/AddButton/AddButton'
 import { ProductList } from '@/components/ProductList/ProductList'
 import { useProducts } from '@/components/hooks/useProducts'
 import { IProduct } from '@/services/products.service'
@@ -15,7 +16,7 @@ import { useEffect, useState } from 'react'
 export default function Products() {
   const [products, setProducts] = useState<IProduct[]>([])
 
-  const { data, isLoading, isSuccess } = useProducts()
+  const { data, isLoading } = useProducts()
 
   useEffect(() => {
     const cashedProducts = sessionStorage.getItem('products')
@@ -45,14 +46,11 @@ export default function Products() {
         <CircularProgress isIndeterminate color='blue.700' size='100px' />
       ) : products.length ? (
         <>
-          <ButtonGroup size='md' mb={5} isAttached variant='outline'>
-            <Button>Add product</Button>
-            <IconButton aria-label='Add to friends' icon={<AddIcon />} />
-          </ButtonGroup>
+          <AddButton />
           <ProductList products={products} />
         </>
       ) : (
-        <div>Данных нет</div>
+        <div>Data not found</div>
       )}
     </Box>
   )
