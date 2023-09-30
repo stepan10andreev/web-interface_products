@@ -13,7 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { EERROR_MESSAGES } from '@/utils/constants/error-messages'
 import cls from './AddProduct.module.css'
-import { FC, useState } from 'react'
+import { BaseSyntheticEvent, FC, SyntheticEvent, useState } from 'react'
 import { Text } from '@chakra-ui/react'
 import { useTokenStore } from '@/store/token'
 import { useRouter } from 'next/navigation'
@@ -42,46 +42,46 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
   } = useForm<IProduct>({
     resolver: yupResolver(schema),
   })
-  const [imageBase64, setImageBase64] = useState('')
+  const [apiError, setApiError] = useState(false)
 
-  const router = useRouter()
+  const { mutate, isLoading } = usePostProduct()
 
-  const { mutate, isLoading, isError, isSuccess, data } = usePostProduct()
+  const onSubmit: SubmitHandler<IProduct> = (formData, event) => {
+    mutate(formData, {
+      onSuccess(data) {
+        const form = event?.target as HTMLFormElement
 
-  const onSubmit: SubmitHandler<IProduct> = async (formData, event) => {
-    mutate(formData)
-    const form = event?.target as HTMLFormElement
+        const fileInput = form.elements[4] as HTMLInputElement
+        const file = fileInput.files && fileInput.files[0]
 
-    const fileInput = form.elements[4] as HTMLInputElement
-    const file = fileInput.files && fileInput.files[0]
+        if (file) {
+          const reader = new FileReader()
+          reader.addEventListener('load', function (event) {
+            const newProduct = {
+              id: uuidv4().substring(0, 3),
+              title: data.data.title,
+              description: data.data.description,
+              price: data.data.price,
+              category: data.data.category,
+              image: event.target?.result || IMAGE_DEFAULT_PATH,
+            }
 
-    if (file) {
-      const reader = new FileReader()
-      reader.addEventListener('load', function (event) {
-        setImageBase64(event.target?.result as string)
-      })
+            const products = getCashedData<IProduct[]>('products')
 
-      reader.readAsDataURL(file)
-    }
+            setCashedData('products', [...products, newProduct])
 
-    if (isSuccess) {
-      const newProduct = {
-        id: uuidv4().substring(0, 3),
-        title: data.data.title,
-        description: data.data.description,
-        price: data.data.price,
-        category: data.data.category,
-        image: imageBase64 || IMAGE_DEFAULT_PATH,
-      }
+            onCloseModal()
 
-      const products = getCashedData<IProduct[]>('products')
+            location.reload()
+          })
 
-      setCashedData('products', [...products, newProduct])
-
-      onCloseModal()
-
-      location.reload()
-    }
+          reader.readAsDataURL(file)
+        }
+      },
+      onError() {
+        setApiError(true)
+      },
+    })
   }
 
   return (
@@ -155,10 +155,10 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
         </Button>
       </ButtonGroup>
 
-      {isError && (
+      {apiError && (
         <Box display='flex' alignItems='center' justifyContent='space-between'>
           <Text fontSize='lg' color='red'>
-            error when adding product
+            Error when adding product
           </Text>
         </Box>
       )}

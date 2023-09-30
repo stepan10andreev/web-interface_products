@@ -30,6 +30,7 @@ export const ProductsService = {
   },
 
   async deleteProduct(id: string) {
+    console.log(await axios.delete<IProduct>(`${API_BASE_URL}/products/${id}`))
     return axios.delete<IProduct>(`${API_BASE_URL}/products/${id}`)
   },
 }

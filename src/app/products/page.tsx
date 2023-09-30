@@ -20,7 +20,6 @@ export default function Products() {
 
   useEffect(() => {
     const cashedProducts = sessionStorage.getItem('products')
-
     if (cashedProducts) {
       setProducts(JSON.parse(cashedProducts))
       return

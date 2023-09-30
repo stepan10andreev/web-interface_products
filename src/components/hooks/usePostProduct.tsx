@@ -6,8 +6,5 @@ export function usePostProduct() {
   return useMutation({
     mutationKey: ['addProduct'],
     mutationFn: (product: IProduct) => ProductsService.addProduct(product),
-    onSuccess(data) {
-      return data.data
-    },
   })
 }

@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   Image,
+  CircularProgress,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
@@ -26,22 +27,36 @@ export default function Product({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (!data) {
-      setCashedData(localStorage.getItem('products'))
+      const cashedProducts = sessionStorage.getItem('products')
+
+      setCashedData(
+        JSON.parse(cashedProducts as string).find(
+          (product: IProduct) => String(product.id) === params.id
+        )
+      )
+      return
     }
-  })
+    setCashedData(data)
+  }, [data, params.id])
 
   return (
     <Box p={5} maxW='600px' mx='auto'>
-      {data && (
-        <ProductCard
-          id={data.id}
-          title={data.title}
-          image={data.image}
-          price={data.price}
-          category={data.category}
-          description={data.description}
-          detailed
-        />
+      {isLoading ? (
+        <CircularProgress isIndeterminate color='blue.700' size='100px' />
+      ) : cashedData ? (
+        <>
+          <ProductCard
+            id={cashedData.id}
+            title={cashedData.title}
+            image={cashedData.image}
+            price={cashedData.price}
+            category={cashedData.category}
+            description={cashedData.description}
+            detailed
+          />
+        </>
+      ) : (
+        <div>Data not found</div>
       )}
     </Box>
   )

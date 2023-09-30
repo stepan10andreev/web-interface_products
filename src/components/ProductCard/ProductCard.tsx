@@ -11,7 +11,7 @@ import {
   ButtonGroup,
   Stack,
 } from '@chakra-ui/react'
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { IProductCardProps } from './productCard.interface'
 import { useRouter } from 'next/navigation'
 import { useDeleteProduct } from '../hooks/useDeleteProduct'
@@ -19,6 +19,7 @@ import { QueryCache, QueryClient } from '@tanstack/react-query'
 import { getCashedData } from '@/utils/helpers/getCashedData'
 import { IProduct } from '@/services/products.service'
 import { setCashedData } from '@/utils/helpers/setCashedData'
+import { usePutProduct } from '../hooks/usePutProduct'
 
 export const ProductCard: FC<IProductCardProps> = ({
   id,
@@ -29,9 +30,13 @@ export const ProductCard: FC<IProductCardProps> = ({
   category,
   detailed = false,
 }) => {
+  const [apiError, setApiError] = useState(false)
+
   const router = useRouter()
 
-  const { mutate, isError, isSuccess } = useDeleteProduct()
+  const { mutate } = useDeleteProduct()
+
+  // const { mutate } = usePutbgProduct()
 
   const getProductInfo = useCallback(() => {
     router.push(`products/${id}`)
@@ -39,18 +44,25 @@ export const ProductCard: FC<IProductCardProps> = ({
   }, [id])
 
   const deleteProduct = useCallback(() => {
-    mutate(String(id))
+    const ID = id && id < 30 ? id : 1
 
-    if (isSuccess) {
-      const products = getCashedData<IProduct[]>('products')
+    mutate(String(ID), {
+      onSuccess: () => {
+        console.log('delete succes')
+        const products = getCashedData<IProduct[]>('products')
 
-      setCashedData(
-        'products',
-        products.filter((product) => product.id !== id)
-      )
+        setCashedData(
+          'products',
+          products.filter((product) => product.id !== id)
+        )
 
-      router.push(`/products`)
-    }
+        router.push(`/products`)
+      },
+      onError: () => {
+        console.log('delete error')
+        setApiError(true)
+      },
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -89,7 +101,11 @@ export const ProductCard: FC<IProductCardProps> = ({
             <Button variant='solid' colorScheme='teal' onClick={changeProduct}>
               Change
             </Button>
-            {isError && <Text color='red' fontSize='1xl' mt='10'></Text>}
+            {apiError && (
+              <Text color='red' fontSize='2xl' mt='20' alignSelf='flex-start'>
+                Error during deletion
+              </Text>
+            )}
           </ButtonGroup>
         </CardFooter>
       </Card>
@@ -119,6 +135,7 @@ export const ProductCard: FC<IProductCardProps> = ({
       </Card>
     )
   }, [
+    apiError,
     category,
     changeProduct,
     deleteProduct,
@@ -127,7 +144,6 @@ export const ProductCard: FC<IProductCardProps> = ({
     getProductInfo,
     id,
     image,
-    isError,
     price,
     title,
   ])
