@@ -8,8 +8,7 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react'
-import { register } from 'module'
-import React, { FC, SyntheticEvent, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { IEditFormProps } from './editForm.interface'
 import { IProduct } from '@/services/products.service'
 import { yupResolver } from '@hookform/resolvers/yup'

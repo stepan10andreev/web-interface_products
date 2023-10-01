@@ -15,11 +15,9 @@ import React, { FC, useCallback, useMemo, useState } from 'react'
 import { IProductCardProps } from './productCard.interface'
 import { useRouter } from 'next/navigation'
 import { useDeleteProduct } from '../hooks/useDeleteProduct'
-import { QueryCache, QueryClient } from '@tanstack/react-query'
 import { getCashedData } from '@/utils/helpers/getCashedData'
 import { IProduct } from '@/services/products.service'
 import { setCashedData } from '@/utils/helpers/setCashedData'
-import { usePutProduct } from '../hooks/usePutProduct'
 import { EditButton } from '../EditButton/EditButton'
 
 export const ProductCard: FC<IProductCardProps> = (props) => {
@@ -70,28 +68,37 @@ export const ProductCard: FC<IProductCardProps> = (props) => {
         <Badge p={1} colorScheme='green' fontSize='1em'>
           id: {id}
         </Badge>
+
         <Badge p={1} fontSize='1em' colorScheme='green'>
           {category}
         </Badge>
+
         <CardBody display='flex' flexDirection='column' gap={5}>
           <Image src={image} alt='image' borderRadius='lg' boxSize='100px' />
+
           <Stack mt='6' spacing='3'>
             <Heading size='xl' mb='auto'>
               {title}
             </Heading>
+
             <Text fontSize={16}>{description}</Text>
           </Stack>
+
           <Text color='blue.600' fontSize='2xl' mt='10'>
             {price}$
           </Text>
         </CardBody>
+
         <Divider />
+
         <CardFooter>
           <ButtonGroup spacing='2'>
             <Button variant='solid' colorScheme='red' onClick={deleteProduct}>
               Delete
             </Button>
+
             <EditButton {...props} />
+
             {apiError && (
               <Text color='red' fontSize='2xl' mt='20' alignSelf='flex-start'>
                 Error during deletion
@@ -105,19 +112,25 @@ export const ProductCard: FC<IProductCardProps> = (props) => {
         <Badge p={1} colorScheme='green' fontSize='1em'>
           id: {id}
         </Badge>
+
         <Badge p={1} fontSize='1em' colorScheme='green'>
           {category}
         </Badge>
+
         <CardBody display='flex' flexDirection='column' gap={5}>
           <Image src={image} alt='image' borderRadius='lg' boxSize='100px' />
+
           <Heading size='md' mb='auto'>
             {title}
           </Heading>
+
           <Text color='blue.600' fontSize='2xl' mt='10'>
             {price}$
           </Text>
         </CardBody>
+
         <Divider />
+
         <CardFooter>
           <Button variant='solid' colorScheme='green' onClick={getProductInfo}>
             More details

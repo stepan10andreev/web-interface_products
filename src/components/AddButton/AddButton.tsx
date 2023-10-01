@@ -8,7 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react'
@@ -32,11 +31,14 @@ export const AddButton = () => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
+
         <ModalContent>
           <ModalHeader fontSize={24} color={'teal.900'}>
             Add Product
           </ModalHeader>
+
           <ModalCloseButton />
+
           <ModalBody>
             <AddProductForm onCloseModal={onClose} />
           </ModalBody>

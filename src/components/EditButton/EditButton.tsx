@@ -20,13 +20,16 @@ export const EditButton: FC<IEditButtonProps> = (product) => {
       <Button variant='solid' colorScheme='teal' onClick={onOpen}>
         Change
       </Button>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize={24} color={'teal.900'}>
             Change Product Info
           </ModalHeader>
+
           <ModalCloseButton />
+
           <ModalBody>
             <EditForm onCloseModal={onClose} {...product} />
           </ModalBody>
