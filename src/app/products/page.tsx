@@ -24,7 +24,6 @@ export default function Products() {
       setProducts(JSON.parse(cashedProducts))
       return
     }
-
     data &&
       (sessionStorage.setItem('products', JSON.stringify(data)),
       setProducts(data))

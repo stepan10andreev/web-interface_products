@@ -21,16 +21,17 @@ export const ProductsService = {
   },
 
   async addProduct(product: IProduct) {
-    console.log(await axios.post<IProduct>(`${API_BASE_URL}/products`, product))
     return axios.post<IProduct>(`${API_BASE_URL}/products`, product)
   },
 
-  async updateProduct(id: string, product: IProduct) {
-    return axios.put(`${API_BASE_URL}/products/${id}`, product)
+  async updateProduct(product: IProduct) {
+    return axios.put<IProduct>(
+      `${API_BASE_URL}/products/${product.id}`,
+      product
+    )
   },
 
   async deleteProduct(id: string) {
-    console.log(await axios.delete<IProduct>(`${API_BASE_URL}/products/${id}`))
     return axios.delete<IProduct>(`${API_BASE_URL}/products/${id}`)
   },
 }

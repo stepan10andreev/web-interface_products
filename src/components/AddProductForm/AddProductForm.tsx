@@ -28,9 +28,9 @@ import { IMAGE_DEFAULT_PATH } from '@/utils/constants/general-constants'
 const schema = yup
   .object({
     title: yup.string().required(EERROR_MESSAGES.required),
-    description: yup.string().required(),
-    category: yup.string().required(),
-    price: yup.number().required().positive().integer(),
+    description: yup.string().required(EERROR_MESSAGES.required),
+    category: yup.string().required(EERROR_MESSAGES.required),
+    price: yup.number().required(EERROR_MESSAGES.required).positive().integer(),
   })
   .required()
 
@@ -49,15 +49,18 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
   const onSubmit: SubmitHandler<IProduct> = (formData, event) => {
     mutate(formData, {
       onSuccess(data) {
-        const form = event?.target as HTMLFormElement
+        let newProduct = {}
 
+        const products = getCashedData<IProduct[]>('products')
+
+        const form = event?.target as HTMLFormElement
         const fileInput = form.elements[4] as HTMLInputElement
         const file = fileInput.files && fileInput.files[0]
 
         if (file) {
           const reader = new FileReader()
           reader.addEventListener('load', function (event) {
-            const newProduct = {
+            newProduct = {
               id: uuidv4().substring(0, 3),
               title: data.data.title,
               description: data.data.description,
@@ -66,17 +69,25 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
               image: event.target?.result || IMAGE_DEFAULT_PATH,
             }
 
-            const products = getCashedData<IProduct[]>('products')
-
             setCashedData('products', [...products, newProduct])
-
-            onCloseModal()
-
-            location.reload()
           })
 
           reader.readAsDataURL(file)
+        } else {
+          newProduct = {
+            id: uuidv4().substring(0, 3),
+            title: data.data.title,
+            description: data.data.description,
+            price: data.data.price,
+            category: data.data.category,
+            image: IMAGE_DEFAULT_PATH,
+          }
+          setCashedData('products', [...products, newProduct])
         }
+
+        onCloseModal()
+
+        location.reload()
       },
       onError() {
         setApiError(true)

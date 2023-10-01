@@ -20,23 +20,23 @@ import { getCashedData } from '@/utils/helpers/getCashedData'
 import { IProduct } from '@/services/products.service'
 import { setCashedData } from '@/utils/helpers/setCashedData'
 import { usePutProduct } from '../hooks/usePutProduct'
+import { EditButton } from '../EditButton/EditButton'
 
-export const ProductCard: FC<IProductCardProps> = ({
-  id,
-  title,
-  price,
-  image,
-  description,
-  category,
-  detailed = false,
-}) => {
+export const ProductCard: FC<IProductCardProps> = (props) => {
+  const {
+    id,
+    title,
+    price,
+    image,
+    description,
+    category,
+    detailed = false,
+  } = props
   const [apiError, setApiError] = useState(false)
 
   const router = useRouter()
 
   const { mutate } = useDeleteProduct()
-
-  // const { mutate } = usePutbgProduct()
 
   const getProductInfo = useCallback(() => {
     router.push(`products/${id}`)
@@ -48,7 +48,6 @@ export const ProductCard: FC<IProductCardProps> = ({
 
     mutate(String(ID), {
       onSuccess: () => {
-        console.log('delete succes')
         const products = getCashedData<IProduct[]>('products')
 
         setCashedData(
@@ -59,15 +58,9 @@ export const ProductCard: FC<IProductCardProps> = ({
         router.push(`/products`)
       },
       onError: () => {
-        console.log('delete error')
         setApiError(true)
       },
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
-
-  const changeProduct = useCallback(() => {
-    router.push(`products/${id}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -98,9 +91,7 @@ export const ProductCard: FC<IProductCardProps> = ({
             <Button variant='solid' colorScheme='red' onClick={deleteProduct}>
               Delete
             </Button>
-            <Button variant='solid' colorScheme='teal' onClick={changeProduct}>
-              Change
-            </Button>
+            <EditButton {...props} />
             {apiError && (
               <Text color='red' fontSize='2xl' mt='20' alignSelf='flex-start'>
                 Error during deletion
@@ -137,7 +128,6 @@ export const ProductCard: FC<IProductCardProps> = ({
   }, [
     apiError,
     category,
-    changeProduct,
     deleteProduct,
     description,
     detailed,
@@ -145,6 +135,7 @@ export const ProductCard: FC<IProductCardProps> = ({
     id,
     image,
     price,
+    props,
     title,
   ])
 

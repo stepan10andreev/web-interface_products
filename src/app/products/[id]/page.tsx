@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react'
 export default function Product({ params }: { params: { id: string } }) {
   const [cashedData, setCashedData] = useState<IProduct | null>(null)
 
-  const { data, isLoading, isSuccess } = useProduct(params.id)
+  const { data, isLoading } = useProduct(params.id)
 
   useEffect(() => {
     if (!data) {
