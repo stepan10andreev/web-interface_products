@@ -14,27 +14,26 @@ export default function Products() {
 
   useEffect(() => {
     const cashedProducts = sessionStorage.getItem('products')
-
     if (cashedProducts) {
       setProducts(JSON.parse(cashedProducts))
+      console.log(products.length)
       return
     }
 
     data &&
       (sessionStorage.setItem('products', JSON.stringify(data)),
       setProducts(data))
-  }, [data])
+  }, [])
 
   return (
     <Box
       p={5}
       maxW='1000px'
-      height='100vh'
       mx='auto'
       display='flex'
       alignItems='center'
       justifyContent='center'
-      flexWrap='wrap'
+      flexDirection='column'
     >
       {isLoading ? (
         <CircularProgress isIndeterminate color='blue.700' size='100px' />
@@ -43,7 +42,7 @@ export default function Products() {
           <AddButton />
           <ProductList products={products} />
         </>
-      ) : products.length ? (
+      ) : products.length === 0 ? (
         <>
           <AddButton />
           <div>There is no products</div>
