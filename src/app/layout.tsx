@@ -3,8 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Auth | Form',
-  description: 'Authorization',
+  title: 'Products',
 }
 
 export default function RootLayout({

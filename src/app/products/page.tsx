@@ -7,10 +7,6 @@ import { Box, CircularProgress } from '@chakra-ui/react'
 import { Metadata } from 'next'
 import { useEffect, useState } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Auth | Products',
-}
-
 export default function Products() {
   const [products, setProducts] = useState<IProduct[]>([])
 
