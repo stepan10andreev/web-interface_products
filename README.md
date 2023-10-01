@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Wеb-интерфейс c авторизацией
 
-## Getting Started
 
-First, run the development server:
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width='30'/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" width='30'/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"  width='30'/> 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Описание
+Wеb-интерфейс c формой авторизацией и возможностью просматривать список `Products`, а также изменять/удалять/добавлять `Product`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Используется [Fake Store API](https://fakestoreapi.com/docs). В связи с этим для авторизации необходимо в поля формы ввести данные пользователей представленных в базе [Fake Store API](https://fakestoreapi.com/users).
+Также нужно учитывать валидацию для пароля - должен содержать латиницу, минимум 6 символов, хотя бы 1 спецсимвол (!@#$%^&*), хотя бы 1 цифру, и хотя бы 1 букву в верхнем и нижнем регистре
+Пример подходящих данных для авторизации:
+- username: `johnd`, password: `m38rmF$`
+  
+или
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- username: `hopkins`, password: `William56$hj`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Полученный token из API записывается в cookie. При отсуствии авторизации - редирект на страницу с формой авторизации.
 
-## Learn More
+После входа можно просмотреть список `Products`, более подробную информацию о продукте по нажатию на кнопку `More detail`. Также имеется кнопка `Add Product` c открытием модального окна и формой для добавления продукта.
 
-To learn more about Next.js, take a look at the following resources:
+На странице продукта - можно удалить продукт или изменить его. При изменении появляется модальное окно с формой для реадктировнаия.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Т.к. запросы не внесят изменения в Fake Store API, данные перезаписываются на клиенте. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Технологии
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [chakra-ui](https://chakra-ui.com/)
+- [Axios](https://axios-http.com/ru/docs/intro)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tanstack Query](https://tanstack.com/query/latest)
+- [react-hook-form](https://react-hook-form.com/)
+- [yup](https://github.com/jquense/yup)
