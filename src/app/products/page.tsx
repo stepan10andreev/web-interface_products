@@ -23,7 +23,7 @@ export default function Products() {
     data &&
       (sessionStorage.setItem('products', JSON.stringify(data)),
       setProducts(data))
-  }, [])
+  }, [data])
 
   return (
     <Box
