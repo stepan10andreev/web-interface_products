@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth.service'
 import { createTokenCookie } from '../../services/actions'
 import { useState } from 'react'
 import { Text } from '@chakra-ui/react'
-import { useTokenStore } from '@/store/token'
+import { useAuthStore } from '@/store/useAuth'
 import { useRouter } from 'next/navigation'
 
 const schema = yup
@@ -46,7 +46,7 @@ export const AuthForm = () => {
 
   const [apiError, setApiError] = useState('')
 
-  const setToken = useTokenStore((state) => state.setAuth)
+  const setAuth = useAuthStore((state) => state.setAuth)
 
   const router = useRouter()
 
@@ -55,7 +55,7 @@ export const AuthForm = () => {
 
     if (response.success) {
       createTokenCookie(response.token as string)
-      setToken(true)
+      setAuth(true)
       router.push('/products')
     } else {
       setApiError(response.message as string)

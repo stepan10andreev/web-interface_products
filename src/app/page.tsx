@@ -1,8 +1,8 @@
-import Image from 'next/image'
-import styles from './page.module.css'
 import { AuthForm } from '@/components/AuthForm/AuthForm'
+import { useAuthStore } from '@/store/useAuth'
 import { Box } from '@chakra-ui/react'
-import cls from './page.module.css'
+import { cookies } from 'next/headers'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
   return (

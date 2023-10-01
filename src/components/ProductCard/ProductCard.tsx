@@ -76,13 +76,13 @@ export const ProductCard: FC<IProductCardProps> = (props) => {
         <CardBody display='flex' flexDirection='column' gap={5}>
           <Image src={image} alt='image' borderRadius='lg' boxSize='100px' />
           <Stack mt='6' spacing='3'>
-            <Heading size='md' mb='auto'>
+            <Heading size='xl' mb='auto'>
               {title}
             </Heading>
-            <Text>{description}</Text>
+            <Text fontSize={16}>{description}</Text>
           </Stack>
           <Text color='blue.600' fontSize='2xl' mt='10'>
-            {price}
+            {price}$
           </Text>
         </CardBody>
         <Divider />
@@ -114,7 +114,7 @@ export const ProductCard: FC<IProductCardProps> = (props) => {
             {title}
           </Heading>
           <Text color='blue.600' fontSize='2xl' mt='10'>
-            {price}
+            {price}$
           </Text>
         </CardBody>
         <Divider />

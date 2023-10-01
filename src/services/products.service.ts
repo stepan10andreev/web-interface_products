@@ -13,7 +13,7 @@ export interface IProduct {
 
 export const ProductsService = {
   async getAll() {
-    return axios.get<IProduct[]>(`${API_BASE_URL}/products?limit=8`)
+    return axios.get<IProduct[]>(`${API_BASE_URL}/products?limit=6`)
   },
 
   async getById(id: string) {

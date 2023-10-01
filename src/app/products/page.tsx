@@ -3,14 +3,7 @@ import { AddButton } from '@/components/AddButton/AddButton'
 import { ProductList } from '@/components/ProductList/ProductList'
 import { useProducts } from '@/components/hooks/useProducts'
 import { IProduct } from '@/services/products.service'
-import { AddIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  CircularProgress,
-  IconButton,
-} from '@chakra-ui/react'
+import { Box, CircularProgress } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Products() {
@@ -20,10 +13,12 @@ export default function Products() {
 
   useEffect(() => {
     const cashedProducts = sessionStorage.getItem('products')
+
     if (cashedProducts) {
       setProducts(JSON.parse(cashedProducts))
       return
     }
+
     data &&
       (sessionStorage.setItem('products', JSON.stringify(data)),
       setProducts(data))
@@ -42,10 +37,15 @@ export default function Products() {
     >
       {isLoading ? (
         <CircularProgress isIndeterminate color='blue.700' size='100px' />
-      ) : products.length ? (
+      ) : products.length > 0 ? (
         <>
           <AddButton />
           <ProductList products={products} />
+        </>
+      ) : products.length ? (
+        <>
+          <AddButton />
+          <div>There is no products</div>
         </>
       ) : (
         <div>Data not found</div>

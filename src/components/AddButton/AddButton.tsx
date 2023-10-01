@@ -33,7 +33,9 @@ export const AddButton = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader fontSize={24} color={'teal.900'}>
+            Add Product
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <AddProductForm onCloseModal={onClose} />

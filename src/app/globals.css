@@ -1,20 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Grenze:wght@200;300;400;600&display=swap');
 
-:root {
-  --white: #ffffff;
-  --red-light: rgba(255, 0, 0, 0.5);
-  --red-accept: rgba(194, 0, 0, 0.764);
-  --turquoise: #d5e4f7;
-  --text-color: #333333;
-  --btn-bg: #5558fa;
-  --btn-hover: #4344b4;
-  --btn-active: #1719a3;
-  --input-hover: #bebebe;
-  --input-active: #959595;
-  --header-bg: rgb(195, 195, 195);
-  --error-text-color: rgb(165, 0, 0);
-}
-
 body {
   padding: 0;
   margin: 0;

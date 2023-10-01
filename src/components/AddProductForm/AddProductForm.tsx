@@ -13,10 +13,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { EERROR_MESSAGES } from '@/utils/constants/error-messages'
 import cls from './AddProduct.module.css'
-import { BaseSyntheticEvent, FC, SyntheticEvent, useState } from 'react'
+import { FC, useState } from 'react'
 import { Text } from '@chakra-ui/react'
-import { useTokenStore } from '@/store/token'
-import { useRouter } from 'next/navigation'
 import { IProduct } from '@/services/products.service'
 import { IAddProductFormProps } from './addProductForm.interface'
 import { usePostProduct } from '../hooks/usePostProduct'
@@ -98,7 +96,9 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cls.form}>
       <FormControl isInvalid={'title' in errors}>
-        <FormLabel htmlFor='title'>Title</FormLabel>
+        <FormLabel fontSize={20} htmlFor='title'>
+          Title
+        </FormLabel>
         <Input id='title' placeholder='title' {...register('title')} />
         <FormErrorMessage>
           {errors.title && errors.title.message}
@@ -106,7 +106,9 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
       </FormControl>
 
       <FormControl isInvalid={'description' in errors}>
-        <FormLabel htmlFor='description'>description</FormLabel>
+        <FormLabel fontSize={20} htmlFor='description'>
+          Description
+        </FormLabel>
         <Input
           id='description'
           placeholder='description'
@@ -118,7 +120,9 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
       </FormControl>
 
       <FormControl isInvalid={'price' in errors}>
-        <FormLabel htmlFor='price'>price</FormLabel>
+        <FormLabel fontSize={20} htmlFor='price'>
+          Price
+        </FormLabel>
         <Input
           type='number'
           id='price'
@@ -131,7 +135,9 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
       </FormControl>
 
       <FormControl isInvalid={'category' in errors}>
-        <FormLabel htmlFor='category'>category</FormLabel>
+        <FormLabel fontSize={20} htmlFor='category'>
+          Category
+        </FormLabel>
         <Input id='category' placeholder='category' {...register('category')} />
         <FormErrorMessage>
           {errors.category && errors.category.message}
@@ -139,7 +145,9 @@ export const AddProductForm: FC<IAddProductFormProps> = ({ onCloseModal }) => {
       </FormControl>
 
       <FormControl isInvalid={'image' in errors}>
-        <FormLabel htmlFor='image'>image</FormLabel>
+        <FormLabel fontSize={20} htmlFor='image'>
+          Image
+        </FormLabel>
 
         <Input
           type='file'

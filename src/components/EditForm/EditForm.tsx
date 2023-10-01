@@ -27,7 +27,7 @@ const schema = yup
     title: yup.string().required(EERROR_MESSAGES.required),
     description: yup.string().required(EERROR_MESSAGES.required),
     category: yup.string().required(EERROR_MESSAGES.required),
-    price: yup.number().required(EERROR_MESSAGES.required).positive().integer(),
+    price: yup.number().required(EERROR_MESSAGES.required).positive(),
   })
   .required()
 
@@ -37,6 +37,7 @@ export const EditForm: FC<IEditFormProps> = ({
   price,
   title,
   id,
+  image,
   onCloseModal,
 }) => {
   const {
@@ -100,7 +101,7 @@ export const EditForm: FC<IEditFormProps> = ({
                 description: data.data.description,
                 price: data.data.price,
                 category: data.data.category,
-                image: IMAGE_DEFAULT_PATH,
+                image: image,
               }
               return newProduct
             }
